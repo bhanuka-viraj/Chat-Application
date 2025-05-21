@@ -115,7 +115,13 @@ public class ChatClient {
                         nameAccepted = true;
                         Platform.runLater(() -> messageView.getItems().add("Connected as " + clientName));
                     }else if (text.startsWith("TEXT")){
-                        Platform.runLater(() -> messageView.getItems().add(text.substring(5)));
+                        Platform.runLater(() ->{
+                            if (text.startsWith("TEXT " + clientName + ": ")){
+                                messageView.getItems().add("You: " + text.substring(clientName.length()+2+5));
+                            }else {
+                                messageView.getItems().add(text.substring(5));
+                            }
+                        });
                     } else if (text.startsWith("IMAGE")) {
                         byte[] imageData = (byte[]) in.readObject();
                         Image image = new Image(new ByteArrayInputStream(imageData));

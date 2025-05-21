@@ -126,7 +126,7 @@ public class ChatServer {
                     if (message == null) break;
                     if (message instanceof String){
                         String text = (String) message;
-                        broadcast("TEXT " + clientName + ": "+text);
+                        broadcast("TEXT " + clientName + ": " +text);
                     } else if (message instanceof byte []){
                         broadcast("IMAGE " + clientName, (byte []) message);
                     }
