@@ -63,7 +63,8 @@ public class ChatClient {
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
 
-            new Thread(this::listenForMessages).start();
+            Thread thread = new Thread(() -> listenForMessages());
+            thread.start();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -152,6 +153,7 @@ public class ChatClient {
         try {
             out.writeObject(message);
             out.flush();
+            Platform.runLater(() -> messageView.getItems().add(clientName + ": " + message));
             txtMessage.clear();
         } catch (IOException e) {
             e.printStackTrace();
